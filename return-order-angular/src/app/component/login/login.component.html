@@ -1,0 +1,45 @@
+
+<section class="vh-140" style="background-image: url(assets/img.jpg);">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              
+  
+              <h3 class="mb-5">Login Portal for Return Order Management</h3>
+              <form (ngSubmit)="onSubmit()">
+              <div class="form-outline mb-4">
+                <input [(ngModel)]="credentials.username" type="text" name="username" class="form-control form-control-lg" required autocomplete="username"/>
+                <label class="form-label">Enter your username</label>
+              </div>
+  
+              <div class="form-outline mb-4">
+                <input [(ngModel)]="credentials.password" type="password" name="password" class="form-control form-control-lg" required/>
+                <label class="form-label">Enter your password</label>
+              </div>
+  
+              <button class="btn btn-success pull-right" type="submit">Login</button>
+              <button style="margin-left: 1em;" class="btn btn-secondary pull-right" type="submit">Clear</button>
+              </form>
+            </div>
+          </div>
+          <br>
+          <div *ngIf="loginError">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              Login Failed!Please try again
+            </div>
+          </div>
+            <div *ngIf="!loginError">
+              <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+              <div class="alert alert-info alert-dismissible fade show" role="alert">
+                Enter your login details to proceed
+              </div>
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

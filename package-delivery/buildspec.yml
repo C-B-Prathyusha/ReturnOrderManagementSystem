@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+      java: corretto11
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building java
+      - cd package-delivery
+      - mvn clean package
+      - echo Building the docker image
+      - docker build -t packapp .
+      - docker tag packapp 156962844638.dkr.ecr.us-west-2.amazonaws.com/romsdelivery_894462:packapp
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo $(docker images)
+      - docker push 156962844638.dkr.ecr.us-west-2.amazonaws.com/romsdelivery_894462:packapp
+      - echo Writing definition files
+      - printf '[{"name":"packapp-container","imageUri":"%s"}]' 156962844638.dkr.ecr.us-west-2.amazonaws.com/romsdelivery_894462:packapp > taskdefinition.json
+
+artifacts:
+  files: package-delivery/taskdefinition.json
+
+
